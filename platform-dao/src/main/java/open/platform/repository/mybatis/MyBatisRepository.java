@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Target(ElementType.TYPE)
 @Documented
 @Component
-public @interface MybatisRepository {
+public @interface MyBatisRepository {
 	String value() default "";
 
 }

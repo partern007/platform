@@ -22,14 +22,11 @@
     </dependency>
     
     <dependency>
-<<<<<<< HEAD
 		<groupId>commons-fileupload</groupId>
 		<artifactId>commons-fileupload</artifactId>
 	</dependency>
     
     <dependency>
-=======
->>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
     	<groupId>open.platform</groupId>
 		<artifactId>platform-dao</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
@@ -39,7 +36,6 @@
 		<groupId>com.google.guava</groupId>
 		<artifactId>guava</artifactId>
 	</dependency>
-<<<<<<< HEAD
 	
 	<dependency>
 		<groupId>open.platform</groupId>
@@ -52,8 +48,6 @@
 		<artifactId>platform-module</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
-=======
->>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
     
   </dependencies>
 </project>

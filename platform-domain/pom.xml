@@ -22,7 +22,7 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-<<<<<<< HEAD
+
     <!-- JSON begin -->
     <dependency>
 		<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -41,7 +41,5 @@
 		<artifactId>json-simple</artifactId>
 	</dependency>
     
-=======
->>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
   </dependencies>
 </project>
