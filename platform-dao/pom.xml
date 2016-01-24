@@ -26,12 +26,15 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 	</dependency>
+<<<<<<< HEAD
 	
 	<dependency>
 		<groupId>open.platform</groupId>
 		<artifactId>platform-domain</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+=======
+>>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
     
   </dependencies>
 </project>

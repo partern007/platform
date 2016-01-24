@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
+<<<<<<< HEAD
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" 
 	xmlns="http://maven.apache.org/POM/4.0.0"
+=======
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+>>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <parent>
@@ -20,18 +24,22 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+<<<<<<< HEAD
     
     <dependency>
 		<groupId>open.platform</groupId>
 		<artifactId>platform-service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+=======
+>>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
 
 	<dependency>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-api</artifactId>
 	</dependency>
 	<dependency>
+<<<<<<< HEAD
 		<groupId>ch.qos.logback</groupId>
 		<artifactId>logback-classic</artifactId>
 		<scope>runtime</scope>
@@ -59,6 +67,35 @@
 		<artifactId>log4jdbc</artifactId>
 		<scope>runtime</scope>
 	</dependency>
+=======
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- 代码直接调用log4j会被桥接到slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- 代码直接调用commons-logging会被桥接到slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- 代码直接调用java.util.logging会被桥接到slf4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.log4jdbc</groupId>
+			<artifactId>log4jdbc</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+>>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
 	
 	<dependency>
 		<groupId>javax.servlet</groupId>
@@ -84,6 +121,7 @@
 		</exclusions>
 		<scope>provided</scope>
 	</dependency>
+<<<<<<< HEAD
 	<!-- mybatis -->
 	<dependency>
 		<groupId>org.mybatis</groupId>
@@ -107,6 +145,8 @@
 		<scope>runtime</scope>
 	</dependency>
 	
+=======
+>>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
 	<dependency>
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-webmvc</artifactId>
@@ -121,6 +161,7 @@
 		<groupId>org.springframework</groupId>
 		<artifactId>spring-context-support</artifactId>
 	</dependency>
+<<<<<<< HEAD
     <dependency>
 		<groupId>com.alibaba</groupId>
 		<artifactId>fastjson</artifactId>
@@ -132,6 +173,9 @@
 		</exclusions>
 		<version>1.1.19</version>
 	</dependency>
+=======
+    
+>>>>>>> e06134ffbd97f85c69eec8906fb2acfb7cc07246
   </dependencies>
   
  	<dependencyManagement>
