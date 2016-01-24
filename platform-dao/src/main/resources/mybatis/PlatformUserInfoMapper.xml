@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="open.platform.repository.mybatis.BaseModule.PlatformUserInfoDao">
+	<sql id="Column_List">
+		id,
+		user_name AS userName,
+		password,
+		email,
+		question,
+		answer,
+		created_time AS createdTime,
+		modified_time AS modifiedTime
+	</sql>
+
+	<sql id="Where_Clause">
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+			<if test="userName != null">
+				AND user_name = #{userName}
+			</if>
+			<if test="password != null">
+				AND password = #{password}
+			</if>
+			<if test="email != null">
+				AND email = #{email}
+			</if>
+			<if test="question != null">
+				AND question = #{question}
+			</if>
+			<if test="answer != null">
+				AND answer = #{answer}
+			</if>
+			<if test="createdTime != null">
+				AND created_time = #{createdTime}
+			</if>
+			<if test="modifiedTime != null">
+				AND modified_time = #{modifiedTime}
+			</if>
+		</where>
+	</sql>
+
+	<sql id="Set_Clause">
+		<set>
+			<if test="userName != null">
+				user_name = #{userName},
+			</if>
+			<if test="password != null">
+				password = #{password},
+			</if>
+			<if test="email != null">
+				email = #{email}
+			</if>
+			<if test="question != null">
+				question = #{question},
+			</if>
+			<if test="answer != null">
+				answer = #{answer}
+			</if>
+			<if test="createdTime != null">
+				created_time = #{createdTime}
+			</if>
+			<if test="modifiedTime != null">
+				modified_time = #{modifiedTime}
+			</if>
+		</set>
+	</sql>
+	<select id="search" parameterType="PlatformUserInfo" resultType="PlatformUserInfo">
+		SELECT
+		<include refid="Column_List" />
+		FROM platform_user
+		<include refid="Where_Clause" />
+	</select>
+
+	<!-- 根据id查询 -->
+	<select id="get" parameterType="long" resultType="PlatformUserInfo">
+		SELECT
+		<include refid="Column_List" />
+		FROM platform_user
+		WHERE id=#{id}
+	</select>
+
+	<!-- 插入数据 -->
+	<insert id="save" parameterType="PlatformUserInfo" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO platform_user
+		(user_name,password,email,question,answer,created_time,modified_time)
+		values
+		(#{userName},#{password},#{email},#{question},#{answer},#{createdTime},#{modifiedTime})
+	</insert>
+
+	<!-- 批量插入数据 -->
+	<insert id="batchInsert" parameterType="list">
+		INSERT INTO platform_user
+		(user_name,password,email,question,answer,created_time,modified_time)
+		values
+		<foreach collection="list" item="entities" index="index"
+			separator=",">
+			(#{entities.userName},#{entities.password},#{entities.email},#{entities.question},#{entities.answer},#{entities.createdTime},#{entities.modifiedTime})
+		</foreach>
+	</insert>
+
+	<!-- 更新数据 -->
+	<update id="update" parameterType="PlatformUserInfo">
+		UPDATE platform_user
+		<include refid="Set_Clause" />
+		WHERE id=#{id}
+	</update>
+
+	<!-- 删除数据 -->
+	<delete id="delete" parameterType="PlatformUserInfo">
+		DELETE platform_user
+		<include refid="Where_Clause" />
+	</delete>
+</mapper>
