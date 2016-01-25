@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="open.platform.repository.mybatis.BaseModule.DepartmentDao">
+    <!--select column-->
+    <sql id="Select_Column">
+        id,
+        company_name AS companyName,
+        depart_name AS departName,
+        group_name AS groupName
+    </sql>
+
+    <!--Where Clause-->
+    <sql id="Where_Clause">
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="companyName != null">
+                AND company_name = #{companyName}
+            </if>
+            <if test="departName != null">
+                AND depart_name = #{departName}
+            </if>
+            <if test="groupName != null">
+                AND group_name = #{departName}
+            </if>
+        </where>
+    </sql>
+
+    <!-- Set Clause-->
+    <sql id="Set_Clause">
+        <set>
+            <if test="companyName != null">
+                company_name = #{companyName},
+            </if>
+            <if test="departName != null">
+                depart_name = #{departName},
+            </if>
+            <if test="group_name != null">
+                group_name = #{departName}
+            </if>
+        </set>
+    </sql>
+
+    <select id="search" parameterType="Department" resultType="Department">
+        SELECT
+            <include refid="Select_Column" />
+        FROM department
+            <include refid="Where_Clause" />
+    </select>
+
+    <select id="selectById" parameterType="Long" resultType="Department">
+        SELECT
+            <include refid="Select_Column" />
+        FROM department
+            <include refid="Where_Clause" />
+    </select>
+
+    <insert id="save" parameterType="Department" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO department(company_name,depart_name,group_name)
+        VALUES (#{companyName},#{departName},#{groupName})
+    </insert>
+</mapper>
