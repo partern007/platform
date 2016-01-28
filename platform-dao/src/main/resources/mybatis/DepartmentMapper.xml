@@ -23,7 +23,7 @@
                 AND depart_name = #{departName}
             </if>
             <if test="groupName != null">
-                AND group_name = #{departName}
+                AND group_name = #{groupName}
             </if>
         </where>
     </sql>
@@ -38,7 +38,7 @@
                 depart_name = #{departName},
             </if>
             <if test="group_name != null">
-                group_name = #{departName}
+                group_name = #{groupName}
             </if>
         </set>
     </sql>
