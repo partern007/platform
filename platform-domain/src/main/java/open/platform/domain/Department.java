@@ -12,7 +12,7 @@ public class Department {
 
     private String groupName;
 
-    public Long getId() {
+    public Long getId() { 
         return id;
     }
 
