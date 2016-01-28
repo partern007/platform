@@ -1,18 +1,16 @@
 package open.platform.web.controller.interceptor;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import open.platform.module.utils.LoginContext;
 import open.platform.web.controller.utils.CookieTools;
-import open.platform.web.controller.utils.SymmetricEncryptionUtils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -40,18 +38,26 @@ public class CheckLoginInterception extends HandlerInterceptorAdapter {
 	}
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, 
-			HttpServletResponse response, Object handler)
-		throws Exception {
-		
-		if (! checkCookie(request, response)) {
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
+
+		if (!checkCookie(request, response)) {
+			// 可以判断页面类型，有的请求
+			PrintWriter out = response.getWriter();
+			String accept = request.getHeader("accept");
+
+			if (accept.matches(".*application/json.*")) {// json数据请求
+				out.write("{\"status\":false,\"code\":\"101\",\"message\":\"当前会话失效，请重新登录系统!\"}");
+			}
+			// HTML页面
+			out.write("<script type='text/javascript'>window.location.href='login.do?status=timeout';</script>");
+			out.flush();
+			out.close();
 			return false;
 		}
 		/**
-		 * 1：初始化cookie
-		 * 2：初始化LoginContext
+		 * 1：初始化cookie 2：初始化LoginContext
 		 */
-		
 		initLoginContext();
 		return true;
 	}

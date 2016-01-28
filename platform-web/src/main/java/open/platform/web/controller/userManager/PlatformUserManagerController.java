@@ -3,6 +3,7 @@ package open.platform.web.controller.userManager;
 import javax.annotation.Resource;
 
 import open.platform.domain.PlatformUserInfo;
+import open.platform.module.utils.GeneratePass;
 import open.platform.module.utils.Resp;
 import open.platform.service.manager.PlatformUserManager;
 
@@ -31,6 +32,7 @@ public class PlatformUserManagerController {
 		try {
 			PlatformUserInfo platformUserInfo = JSON.parseObject(userInfo,
 					new TypeReference<PlatformUserInfo>() {});
+			platformUserInfo.setPassword(GeneratePass.encode(platformUserInfo.getPassword()));
 			platformUserManager.save(platformUserInfo);
 			return Resp.succ(null);
 		} catch (Exception e) {
@@ -61,6 +63,7 @@ public class PlatformUserManagerController {
 		try {
 			PlatformUserInfo platformUserInfo = JSON.parseObject(userInfo,
 					new TypeReference<PlatformUserInfo>() {});
+			platformUserInfo.setPassword(GeneratePass.encode(platformUserInfo.getPassword()));
 			platformUserManager.update(platformUserInfo);
 			return Resp.succ(null);
 		} catch (Exception e) {
@@ -79,19 +82,5 @@ public class PlatformUserManagerController {
 			return Resp.fail("查询失败");
 		}
 	}
-	
-//	public static void main(String[] args){
-//		PlatformUserInfo platformUserInfo = new PlatformUserInfo();
-//		platformUserInfo.setUserName("libaocang");
-//		platformUserInfo.setEmail("email");
-//		platformUserInfo.setQuestion(" ");
-//		platformUserInfo.setAnswer(" ");
-//		platformUserInfo.setCreatedTime(new Date());
-//		platformUserInfo.setModifiedTime(new Date());
-//		platformUserInfo.setPassword("");
-//		
-//		String json = JSON.toJSONString(platformUserInfo);
-//		System.out.println(json);
-//	}
 
 }
