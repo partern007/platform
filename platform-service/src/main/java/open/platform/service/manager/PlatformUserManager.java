@@ -13,5 +13,6 @@ import open.platform.domain.PlatformUserInfo;
 public interface PlatformUserManager {	
 	public void save(PlatformUserInfo platformUserInfo);
 	public void delete(PlatformUserInfo platformUserInfo);
-	public List<PlatformUserInfo> query(PlatformUserInfo platformUserInfo);
+	public List<PlatformUserInfo> query();
+	public void update(PlatformUserInfo platformUserInfo);
 }

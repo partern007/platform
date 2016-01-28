@@ -8,6 +8,6 @@ import open.platform.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface PlatformUserInfoDao extends BaseDao<PlatformUserInfo>{
-	public List<PlatformUserInfo> query(PlatformUserInfo platformUserInfo);
+	public List<PlatformUserInfo> query();
 
 }

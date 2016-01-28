@@ -39,11 +39,11 @@
 		<asm.version>3.3.1</asm.version>
 		<xmlsec.version>1.4.3</xmlsec.version>
 		<poi.version>3.7</poi.version>
-		<!-- Plugin的属性定义 -->
+		<!-- Plugin的属性定�?-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.6</java.version>
 
-		<!-- 项目属性 -->
+		<!-- 项目属�? -->
 		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
 		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
 		<jdbc.driver.version>5.1.22</jdbc.driver.version>
@@ -174,7 +174,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			<!-- 重新定义Java XPath Engine到最新版，避免旧版那些不必要的依赖 -->
+			<!-- 重新定义Java XPath Engine到最新版，避免旧版那些不必要的依�?-->
 			<dependency>
 				<groupId>jaxen</groupId>
 				<artifactId>jaxen</artifactId>

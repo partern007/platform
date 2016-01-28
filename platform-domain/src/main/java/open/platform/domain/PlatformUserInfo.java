@@ -7,8 +7,10 @@ public class PlatformUserInfo {
 	private String userName;
 	private String password;
 	private String email;
+	private String description;
 	private String question;
 	private String answer;
+	private Integer departmentId;
 	private Date createdTime;
 	private Date modifiedTime;
 	
@@ -59,5 +61,17 @@ public class PlatformUserInfo {
 	}
 	public void setModifiedTime(Date modifiedTime) {
 		this.modifiedTime = modifiedTime;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
 	}
 }

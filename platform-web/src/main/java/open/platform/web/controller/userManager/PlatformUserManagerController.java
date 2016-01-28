@@ -1,7 +1,5 @@
 package open.platform.web.controller.userManager;
 
-import java.util.Date;
-
 import javax.annotation.Resource;
 
 import open.platform.domain.PlatformUserInfo;
@@ -41,18 +39,59 @@ public class PlatformUserManagerController {
 		}
 	}
 	
-	public static void main(String[] args){
-		PlatformUserInfo platformUserInfo = new PlatformUserInfo();
-		platformUserInfo.setUserName("libaocang");
-		platformUserInfo.setEmail("email");
-		platformUserInfo.setQuestion(" ");
-		platformUserInfo.setAnswer(" ");
-		platformUserInfo.setCreatedTime(new Date());
-		platformUserInfo.setModifiedTime(new Date());
-		platformUserInfo.setPassword("");
-		
-		String json = JSON.toJSONString(platformUserInfo);
-		System.out.println(json);
+	@RequestMapping(value = "/base/deleteUser", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object deleteUser(
+			@RequestParam(value = "userInfo", required = true) String userInfo) {
+		try {
+			PlatformUserInfo platformUserInfo = JSON.parseObject(userInfo,
+					new TypeReference<PlatformUserInfo>() {});
+			platformUserManager.delete(platformUserInfo);
+			return Resp.succ(null);
+		} catch (Exception e) {
+			LOG.error("删除失败", e);
+			return Resp.fail("删除失败");
+		}
 	}
+	
+	@RequestMapping(value = "/base/updateUserInfo", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object updateUserInfo(
+			@RequestParam(value = "userInfo", required = true) String userInfo) {
+		try {
+			PlatformUserInfo platformUserInfo = JSON.parseObject(userInfo,
+					new TypeReference<PlatformUserInfo>() {});
+			platformUserManager.update(platformUserInfo);
+			return Resp.succ(null);
+		} catch (Exception e) {
+			LOG.error("更新失败", e);
+			return Resp.fail("更新失败");
+		}
+	}
+	
+	@RequestMapping(value = "/base/queryAllUserInfo", produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Object queryAllUserInfo() {
+		try {
+			return Resp.succ(platformUserManager.query());
+		} catch (Exception e) {
+			LOG.error("查询", e);
+			return Resp.fail("查询失败");
+		}
+	}
+	
+//	public static void main(String[] args){
+//		PlatformUserInfo platformUserInfo = new PlatformUserInfo();
+//		platformUserInfo.setUserName("libaocang");
+//		platformUserInfo.setEmail("email");
+//		platformUserInfo.setQuestion(" ");
+//		platformUserInfo.setAnswer(" ");
+//		platformUserInfo.setCreatedTime(new Date());
+//		platformUserInfo.setModifiedTime(new Date());
+//		platformUserInfo.setPassword("");
+//		
+//		String json = JSON.toJSONString(platformUserInfo);
+//		System.out.println(json);
+//	}
 
 }

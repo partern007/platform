@@ -19,10 +19,12 @@ public class PlatformUserManagerImpl implements PlatformUserManager{
 	}
 	public void delete(PlatformUserInfo platformUserInfo){
 		platformUserInfoDao.delete(platformUserInfo);
-		
 	}
-	public List<PlatformUserInfo> query(PlatformUserInfo platformUserInfo){
-		List<PlatformUserInfo> platformUserInfos = platformUserInfoDao.query(platformUserInfo);
+	public void update(PlatformUserInfo platformUserInfo){
+		platformUserInfoDao.update(platformUserInfo);
+	}
+	public List<PlatformUserInfo> query(){
+		List<PlatformUserInfo> platformUserInfos = platformUserInfoDao.query();
 		return platformUserInfos;
 	}
 

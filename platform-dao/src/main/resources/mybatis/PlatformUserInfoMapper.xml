@@ -8,8 +8,10 @@
 		user_name AS userName,
 		password,
 		email,
+		description,
 		question,
 		answer,
+		department_id AS departmentId,
 		created_time AS createdTime,
 		modified_time AS modifiedTime
 	</sql>
@@ -28,11 +30,17 @@
 			<if test="email != null">
 				AND email = #{email}
 			</if>
+			<if test="description != null">
+				AND description = #{description}
+			</if>
 			<if test="question != null">
 				AND question = #{question}
 			</if>
 			<if test="answer != null">
 				AND answer = #{answer}
+			</if>
+			<if test="departmentId != null">
+				AND department_id = #{departmentId}
 			</if>
 			<if test="createdTime != null">
 				AND created_time = #{createdTime}
@@ -54,11 +62,17 @@
 			<if test="email != null">
 				email = #{email}
 			</if>
+			<if test="description != null">
+				AND description = #{description}
+			</if>
 			<if test="question != null">
 				question = #{question},
 			</if>
 			<if test="answer != null">
 				answer = #{answer}
+			</if>
+			<if test="departmentId != null">
+				AND department_id = #{departmentId}
 			</if>
 			<if test="createdTime != null">
 				created_time = #{createdTime}
@@ -87,19 +101,24 @@
 	<insert id="save" parameterType="PlatformUserInfo" useGeneratedKeys="true"
 		keyProperty="id">
 		INSERT INTO platform_user
-		(user_name,password,email,question,answer,created_time,modified_time)
+		(user_name,password,email,description,question,answer,department_id,
+			created_time,modified_time)
 		values
-		(#{userName},#{password},#{email},#{question},#{answer},#{createdTime},#{modifiedTime})
+		(#{userName},#{password},#{email},#{description},#{question},#{answer},
+			#{departmentId},#{createdTime},#{modifiedTime})
 	</insert>
 
 	<!-- 批量插入数据 -->
 	<insert id="batchInsert" parameterType="list">
 		INSERT INTO platform_user
-		(user_name,password,email,question,answer,created_time,modified_time)
+		(user_name,password,email,description,question,answer,department_id,
+			created_time,modified_time)
 		values
 		<foreach collection="list" item="entities" index="index"
 			separator=",">
-			(#{entities.userName},#{entities.password},#{entities.email},#{entities.question},#{entities.answer},#{entities.createdTime},#{entities.modifiedTime})
+			(#{entities.userName},#{entities.password},#{entities.email},#{entities.description}
+				,#{entities.question},#{entities.answer},#{departmentId},#{entities.createdTime},
+				#{entities.modifiedTime})
 		</foreach>
 	</insert>
 
@@ -115,4 +134,10 @@
 		DELETE platform_user
 		<include refid="Where_Clause" />
 	</delete>
+	
+	<select id="query" resultType="PlatformUserInfo">
+		SELECT
+		<include refid="Column_List" />
+		FROM platform_user
+	</select>
 </mapper>

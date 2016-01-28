@@ -23,22 +23,10 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- JSON begin -->
-    <dependency>
-		<groupId>com.fasterxml.jackson.datatype</groupId>
-		<artifactId>jackson-datatype-joda</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>com.fasterxml.jackson.core</groupId>
-		<artifactId>jackson-databind</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>com.fasterxml.jackson.module</groupId>
-		<artifactId>jackson-module-jaxb-annotations</artifactId>
-	</dependency>
-	<dependency>
-		<groupId>com.googlecode.json-simple</groupId>
-		<artifactId>json-simple</artifactId>
+     <dependency>
+		<groupId>open.platform</groupId>
+		<artifactId>platform-module</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
     
   </dependencies>
