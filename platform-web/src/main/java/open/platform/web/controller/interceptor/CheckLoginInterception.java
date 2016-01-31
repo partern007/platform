@@ -1,7 +1,6 @@
 package open.platform.web.controller.interceptor;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 
 import javax.annotation.Resource;
@@ -9,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import open.platform.module.common.Constants;
 import open.platform.module.utils.LoginContext;
 import open.platform.web.controller.utils.CookieTools;
 
@@ -26,7 +26,7 @@ public class CheckLoginInterception extends HandlerInterceptorAdapter {
 	@Resource
 	private CookieTools cookieTools;
 	
-	@Value("${loginUrl}")
+	@Value("${checkLogin.loginUrl}")
 	private String loginUrl;
 	
 	public String getLoginUrl() {
@@ -42,32 +42,21 @@ public class CheckLoginInterception extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler) throws Exception {
 
 		if (!checkCookie(request, response)) {
-			// 可以判断页面类型，有的请求
-			PrintWriter out = response.getWriter();
-			String accept = request.getHeader("accept");
-
-			if (accept.matches(".*application/json.*")) {// json数据请求
-				out.write("{\"status\":false,\"code\":\"101\",\"message\":\"当前会话失效，请重新登录系统!\"}");
-			}
-			// HTML页面
-			out.write("<script type='text/javascript'>window.location.href='login.do?status=timeout';</script>");
-			out.flush();
-			out.close();
+//			LoginContext context = LoginContext.getInstance(Constants.TOURIST);
+//			LoginContext.setLoginContext(context);
+//			initResource();
 			return false;
+		}else{
+			initResource();
+			return true;
 		}
-		/**
-		 * 1：初始化cookie 2：初始化LoginContext
-		 */
-		initLoginContext();
-		return true;
 	}
 	
-	private void initLoginContext(){
-		LoginContext context = LoginContext.getInstance();
-		String name = context.getName();
+	private void initResource(){
+		boolean isTourist = LoginContext.getLoginContext().isTourist();
 		//在用户表中查到该用户，则该用户不为游客
 		//给游客分发可访问的资源
-		if(context.isTourist()){
+		if(isTourist){
 			
 		}else{//管理员可访问的资源
 			
@@ -86,26 +75,9 @@ public class CheckLoginInterception extends HandlerInterceptorAdapter {
 			response.addHeader("Cache-Control", "no-store");
 			response.setDateHeader("Expires", 0);
 			
-			response.sendRedirect(this.getPassportUrl(request));
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * 获得重定向到passport的url
-	 */
-	protected String getPassportUrl(HttpServletRequest request) 
-			throws ServletException, IOException {
-		String queryString = request.getQueryString();
-		StringBuffer requestUrl = request.getRequestURL().append(
-				StringUtils.isBlank(queryString) ? "" : "?" + queryString);
-		
-		StringBuilder urlBuilder = new StringBuilder();
-		urlBuilder.append(loginUrl).append("?ReturnUrl=").append(
-				URLEncoder.encode(requestUrl.toString(), "UTF-8"));
-		
-		return urlBuilder.toString();
 	}
 
 }

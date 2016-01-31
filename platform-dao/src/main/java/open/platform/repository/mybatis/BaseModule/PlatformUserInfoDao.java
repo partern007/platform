@@ -9,5 +9,6 @@ import open.platform.repository.mybatis.MyBatisRepository;
 @MyBatisRepository
 public interface PlatformUserInfoDao extends BaseDao<PlatformUserInfo>{
 	public List<PlatformUserInfo> query();
-
+	public PlatformUserInfo verifyPassword(String userName, String password);
+	public PlatformUserInfo queryByUsername(String username);
 }

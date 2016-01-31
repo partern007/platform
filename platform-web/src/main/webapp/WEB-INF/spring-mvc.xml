@@ -59,5 +59,25 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="checkLoginInterceptor" 
+	    class="open.platform.web.controller.interceptor.CheckLoginInterception" />
+	<bean id="checkAuthorityInterceptor" 
+	    class="open.platform.web.controller.interceptor.CheckAuthorityInterceptor" />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+		    <mvc:mapping path="/**" />
+		    <mvc:exclude-mapping path="/"/>
+		    <mvc:exclude-mapping path="/admin/**"/>
+		    <ref bean="checkLoginInterceptor" />
+		</mvc:interceptor>
+		<!-- <mvc:interceptor>
+		    <mvc:mapping path="/**" /> 
+		    <mvc:exclude-mapping path="/"/>
+		    <mvc:exclude-mapping path="/favicon.ico"/>
+		    <ref bean="checkAuthorityInterceptor" />
+		</mvc:interceptor> -->
+	</mvc:interceptors>
      
 </beans>

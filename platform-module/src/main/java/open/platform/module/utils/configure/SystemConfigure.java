@@ -4,7 +4,7 @@ package open.platform.module.utils.configure;
 
 public class SystemConfigure extends ConfigEngine{
 	
-	private static String path = "../conf/system.config";
+	private static final String path = "/conf/system.config";
 	
 	private SystemConfigure(){
 		super(path);

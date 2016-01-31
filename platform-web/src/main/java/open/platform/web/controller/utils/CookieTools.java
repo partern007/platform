@@ -3,6 +3,7 @@ package open.platform.web.controller.utils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import open.platform.module.common.Constants;
 import open.platform.module.utils.LoginContext;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,18 +23,14 @@ public class CookieTools {
 	 */
 	@Value("${checkLogin.cookieName}")
 	private String cookieName;
-	/**
-	 * passport登陆的校验key
-	 */
-	@Value("${checkLogin.authenticationKey}")
-	private String authenticationKey;
 
 	public boolean validateCookie(HttpServletRequest request) {
 		try {
 			if (parseDotnetTicket(request)) {
-				FormsAuthenticationTicket ticket = FormsAuthenticationTicket.getTicket();
-				LoginContext context = LoginContext.getInstance(ticket.getUsername());
-				LoginContext.setLoginContext(context);
+//				FormsAuthenticationTicket ticket = FormsAuthenticationTicket.getTicket();
+//				LoginContext context = LoginContext.getInstance(ticket.getUsername());
+//				LoginContext.setLoginContext(context);
+				logger.debug("--- parseDotnetTicket succeed ---");
 			} else {
 				logger.debug("--- parseDotnetTicket failed ---");
 				return false;
@@ -52,7 +49,7 @@ public class CookieTools {
 		if ((cookies != null) && (cookies.length > 0)) {
 			for (Cookie cookie : cookies) {
 				String cliCookie = cookie.getName();
-				if (cliCookie.equals(cookieName)) {
+				if (cliCookie.equals(Constants.Secure.COOKIE_KEY)) {
 					loginCookie = cookie;
 					break;
 				}
@@ -66,22 +63,30 @@ public class CookieTools {
 
 		loginCookie.setMaxAge(-1);
 		if (StringUtils.isNotBlank(loginCookie.getValue())) {
-			FormsAuthenticationTicket ticket = null;
+//			FormsAuthenticationTicket ticket = null;
 
+			String value = "";
 			try {
-				ticket = DotnetAuthenticationUtil.getFormsAuthenticationTicket(loginCookie.getValue(),
-						authenticationKey);
+				value = SymmetricEncryptionUtils.decryptByAES(loginCookie.getValue(), 
+						Constants.Secure.SECURITY_KEY);
+//				ticket = DotnetAuthenticationUtil.getFormsAuthenticationTicket(loginCookie.getValue(),
+//						Constants.Secure.SECURITY_KEY);
 			} catch (Exception e) {
 				logger.error("--- decrypt dotnet cookie error ---", e);
 			}
 
-			if (ticket != null) {
-				FormsAuthenticationTicket.setTicket(ticket);
+//			if (ticket != null) {
+//				FormsAuthenticationTicket.setTicket(ticket);
+//				return true;
+//			} else {
+//				if (logger.isDebugEnabled()) {
+//					logger.debug("--- ticket is null ---");
+//				}
+//			}
+			if(StringUtils.isNotBlank(value)){
+				LoginContext context = LoginContext.getInstance(value);
+				LoginContext.setLoginContext(context);
 				return true;
-			} else {
-				if (logger.isDebugEnabled()) {
-					logger.debug("--- ticket is null ---");
-				}
 			}
 		} else {
 			logger.debug("--- loginCookie value is blank ---");
@@ -96,14 +101,6 @@ public class CookieTools {
 
 	public void setCookieName(String cookieName) {
 		this.cookieName = cookieName;
-	}
-
-	public String getAuthenticationKey() {
-		return authenticationKey;
-	}
-
-	public void setAuthenticationKey(String authenticationKey) {
-		this.authenticationKey = authenticationKey;
 	}
 
 }

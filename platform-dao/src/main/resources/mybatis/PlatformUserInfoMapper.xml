@@ -140,4 +140,18 @@
 		<include refid="Column_List" />
 		FROM platform_user
 	</select>
+	
+	<select id="verifyPassword" parameterType="String" resultType="PlatformUserInfo">
+		SELECT
+		<include refid="Column_List" />
+		FROM platform_user
+		WHERE user_name = #{0} AND password = #{1}
+	</select>
+	
+	<select id="queryByUsername" parameterType="String" resultType="PlatformUserInfo">
+		SELECT
+		<include refid="Column_List" />
+		FROM platform_user
+		WHERE user_name = #{username}
+	</select>
 </mapper>

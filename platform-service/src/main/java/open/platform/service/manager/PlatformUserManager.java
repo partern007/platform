@@ -15,4 +15,6 @@ public interface PlatformUserManager {
 	public void delete(PlatformUserInfo platformUserInfo);
 	public List<PlatformUserInfo> query();
 	public void update(PlatformUserInfo platformUserInfo);
+	public boolean verifyPassword(String userName, String password);
+	public PlatformUserInfo queryByUsername(String username);
 }

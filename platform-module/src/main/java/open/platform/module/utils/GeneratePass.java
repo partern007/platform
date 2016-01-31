@@ -13,7 +13,7 @@ import open.platform.module.utils.security.MD5;
  * */
 public class GeneratePass {
 
-	private static SystemConfigure systemConfigure = SystemConfigure.getInstance();
+	private static final SystemConfigure systemConfigure = SystemConfigure.getInstance();
 	
 	public static String encode(String password) throws Exception {
 		String key = systemConfigure.get("secret_key");
