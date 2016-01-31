@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace=" open.platform.domain.PlatformResource">
+    <!--select column-->
+   <sql id="column_list">
+       id,
+       resource,
+       authority,
+       created_time AS createdTime,
+       modify_time AS modifyTime   
+   </sql>
+   
+   <select id="selectById" parameterType="java.lang.Long" resultType="PlatformResource">
+       SELECT
+       <include refid="column_list"></include>
+       FORM paltform_resource
+       WHERE id = #{id}
+   </select>
+   
+   <insert id="save" parameterType="PlatformResource" useGeneratedKeys="true" keyProperty="id">
+     <![CDATA[
+       INSERT INTO platform_authority (resource,authority,created_time,modify_time)
+       VALUES (#{resource},#{authority},NOW(),NOW())  
+     ]]>     
+   </insert>
+   
+</mapper>
