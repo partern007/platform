@@ -10,6 +10,14 @@
        created_time AS createdTime,
        modify_time AS modifyTime   
    </sql>
+   <!-- 查询条件 -->
+   <sql id="WHERE_CLAUSE">
+       <trim prefix="WHERE" prefixOverrides="AND">
+           <if test="id != null"><![CDATA[AND id = #{id}]]></if>
+           <if test="resource != null"><![CDATA[AND resource= #{resource}]]></if>
+           <if test="authority != null"><![CDATA[AND authority= #{authority}]]></if>  
+       </trim>  
+   </sql>
    
    <select id="selectById" parameterType="java.lang.Long" resultType="PlatformResource">
        SELECT
@@ -24,5 +32,37 @@
        VALUES (#{resource},#{authority},NOW(),NOW())  
      ]]>     
    </insert>
+   
+   <delete id="delete" parameterType="PlatformResource">
+   <![CDATA[DELETE FROM
+       	paltform_resource]]>
+       <include refid="WHERE_CLAUSE"/>   
+   </delete>
+   
+   <delete id="deleteById" parameterType="java.lang.Long">
+   <![CDATA[DELETE FROM
+       paltform_resource]]>
+       WHERE id=#{id}
+   </delete>
+   
+   <select id="search" parameterType="PlatformResource" resultType="PlatformResource">
+       <![CDATA[SELECT FROM]]>
+       paltform_resource
+       <include refid="WHERE_CLAUSE"/>
+   </select>
+   
+   <update id="update" parameterType="">
+   <![CDATA[UPDATE]]>
+       paltform_resource
+   <set>
+       <if test="resource != null">
+           resource = #{resource}
+       </if>
+       <if test="authority != null">
+           resource = #{authority}
+       </if>   
+   </set>
+  	 WHERE id = #{id}
+   </update>
    
 </mapper>

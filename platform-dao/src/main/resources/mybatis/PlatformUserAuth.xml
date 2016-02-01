@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="open.platform.domain.PlatformUserAuth">
+    <!--select column-->
+   <sql id="column_list">
+       id,
+       user_id AS userId,
+       auth_id AS authId,
+       created_time AS createdTime,
+       modify_time AS modifyTime   
+   </sql>
+   <!-- 查询条件 -->
+   <sql id="WHERE_CLAUSE">
+       <trim prefix="WHERE" prefixOverrides="AND">
+           <if test="id != null"><![CDATA[AND id = #{id}]]></if>
+           <if test="user_id != null"><![CDATA[AND user_id= #{userId}]]></if>
+           <if test="auth_id != null"><![CDATA[AND auth_id= #{authId}]]></if>  
+       </trim>  
+   </sql>
+   
+   <select id="selectById" parameterType="java.lang.Long" resultType="PlatformUserAuth">
+       SELECT
+       <include refid="column_list"></include>
+       FORM paltform_user_auth
+       WHERE id = #{id}
+   </select>
+   
+   <insert id="save" parameterType="PlatformUserAuth" useGeneratedKeys="true" keyProperty="id">
+     <![CDATA[
+       INSERT INTO paltform_user_auth (user_id,auth_id,created_time,modify_time)
+       VALUES (#{userId},#{authId},NOW(),NOW())  
+     ]]>     
+   </insert>
+   
+   <delete id="delete" parameterType="PlatformUserAuth">
+   <![CDATA[DELETE FROM
+       	paltform_user_auth]]>
+       <include refid="WHERE_CLAUSE"/>   
+   </delete>
+   
+   <delete id="deleteById" parameterType="java.lang.Long">
+   <![CDATA[DELETE FROM
+       paltform_user_auth]]>
+       WHERE id=#{id}
+   </delete>
+   
+   <select id="search" parameterType="PlatformUserAuth" resultType="PlatformUserAuth">
+       <![CDATA[SELECT FROM]]>
+       paltform_user_auth
+       <include refid="WHERE_CLAUSE"/>
+   </select>
+   
+   <update id="update" parameterType="PlatformUserAuth">
+   <![CDATA[UPDATE]]>
+       paltform_user_auth
+   <set>
+       <if test="userId != null">
+           user_id = #{userId}
+       </if>
+       <if test="authId != null">
+           auth_id = #{authId}
+       </if>   
+   </set>
+  	 WHERE id = #{id}
+   </update>
+   
+</mapper>
