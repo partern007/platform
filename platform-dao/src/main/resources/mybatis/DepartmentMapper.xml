@@ -56,9 +56,43 @@
         FROM department
             <include refid="Where_Clause" />
     </select>
-
+	
     <insert id="save" parameterType="Department" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO department(company_name,depart_name,group_name)
         VALUES (#{companyName},#{departName},#{groupName})
     </insert>
+    
+    <select id="queryAllCompany" parameterType="Department" resultType="Department">
+    	SELECT DISTINCT company_name AS companyName
+    	FROM department
+    		<include refid="Where_Clause" />
+    </select>
+    
+    <select id="queryAllDepartByCom" parameterType="Department" resultType="Department">
+    	SELECT DISTINCT depart_name AS departName
+    	FROM department
+    		<include refid="Where_Clause" />
+    </select>
+    
+    <select id="queryAllGroupByComAndDepart" parameterType="Department" resultType="Department">
+    	SELECT DISTINCT group_name AS groupName
+    	FROM department
+    		<include refid="Where_Clause" />
+    </select>
+    <delete id="delete" parameterType="Department">
+    	DELETE 
+    	FROM department
+    		<include refid="Where_Clause" />
+    </delete>
+    
+    <delete id="deleteById" parameterType="Long">
+    	DELETE
+    	FROM department
+    	WHERE id=#{id}
+    </delete>
+    
+    <update id="update" parameterType="Department">
+    	UPDATE department
+    	<include refid="Set_Clause" />
+    </update>
 </mapper>
