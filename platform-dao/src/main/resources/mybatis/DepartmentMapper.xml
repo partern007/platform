@@ -94,5 +94,6 @@
     <update id="update" parameterType="Department">
     	UPDATE department
     	<include refid="Set_Clause" />
+    	WHERE id=#{id}
     </update>
 </mapper>

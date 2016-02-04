@@ -34,7 +34,7 @@ public class PlatformUserManagerController {
 	@Resource
 	private PlatformUserManager platformUserManager;
 
-	@RequestMapping(value = "/administer/saveUserInfo", produces = "application/json;charset=UTF-8")
+	@RequestMapping(value = "/admin/administer/saveUserInfo", produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Object saveUserInfo(
 			@RequestParam(value = "userInfo", required = true) String userInfo, 
@@ -197,5 +197,4 @@ public class PlatformUserManagerController {
 		response.addHeader("Cache-Control", "no-store");
 		response.setDateHeader("Expires", 0);
 	}
-
 }
