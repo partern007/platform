@@ -1,12 +1,11 @@
 /*打卡记录表*/
 CREATE TABLE `time_record` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
   `username` varchar(128) NOT NULL,
   `online_flag` tinyint(4) NOT NULL COMMENT '上班打卡标志',
   `online_time` datetime NOT NULL COMMENT '上班打卡时间',
-  `offline_flag` tinyint(4) NOT NULL COMMENT '下班打卡标志',
-  `offline_time` datetime NOT NULL COMMENT '下班打卡时间',
+  `offline_flag` tinyint(4) COMMENT '下班打卡标志',
+  `offline_time` datetime  COMMENT '下班打卡时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -15,6 +14,6 @@ CREATE TABLE `department` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `company_name` varchar(255) NOT NULL,
   `depart_name` varchar(255) NOT NULL COMMENT '部门名称',
-  `group_name` varchar(255) NOT NULL COMMENT '小组名称(多级别拼接)',
+  `group_name` varchar(255) NOT NULL COMMENT '小组名称',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
