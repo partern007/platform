@@ -10,8 +10,6 @@ import java.util.Date;
 public class TimeRecord {
     private Long id;
 
-    private Long userId;
-
     private String username;
 
     private Integer onlineFlag; //上班是否打卡
@@ -28,14 +26,6 @@ public class TimeRecord {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {

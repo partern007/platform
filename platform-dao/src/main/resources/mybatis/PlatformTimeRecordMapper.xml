@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="open.platform.repository.mybatis.BaseModule.TimeRecordDao">
+	<sql id="SELECT_COLUMN">
+		id,
+		username AS username,
+		online_flag AS onlineFlag,
+		online_time AS onlineDate,
+		offline_flag AS offlineFlag,
+		offline_time AS offlineDate
+	</sql>	
+	
+	<sql id="WHERE_CONDITION">
+		<where>
+			<if test="id != null">
+				id=#{id}
+			</if>
+			<if test="username != null">
+				AND username=#{username}
+			</if>
+			<if test="onlineFlag != null">
+				AND online_flag=#{onlineFlag}
+			</if>
+			<if test="onlineDate != null">
+				AND online_date=#{onlineDate}
+			</if>
+			<if test="offlineFlag != null">
+				AND offline_flag=#{offlineFlag}
+			</if>
+			<if test="offlineDate != null">
+				AND offline_date=#{offlineDate}
+			</if>
+		</where>
+	</sql>
+	
+	<sql id="SET_CLAUSE">
+		<set>
+
+			<if test="username != null">
+				username=#{username},
+			</if>
+			<if test="onlineFlag != null">
+				online_flag=#{onlineFlag},
+			</if>
+			<if test="onlineDate != null">
+				online_time=#{onlineDate},
+			</if>
+			<if test="offlineFlag != null">
+				offline_flag=#{offlineFlag},
+			</if>
+			<if test="offlineDate != null">
+				offline_time=#{offlineDate}
+			</if>
+		</set>
+	</sql>
+	
+	<select id="search" parameterType="TimeRecord" resultType="TimeRecord">
+		SELECT 
+			<include refid="SELECT_COLUMN" />
+		FROM time_record
+			<include refid="WHERE_CONDITION" />
+	</select>
+	
+	<!-- 查询具体某天是否打卡 -->
+	<select id="queryRecordByDate" parameterType="TimeRecord" resultType="TimeRecord">
+		SELECT
+			<include refid="SELECT_COLUMN" />
+		FROM time_record
+		WHERE username=#{username} AND online_time BETWEEN DATE_FORMAT(DATE(#{onlineDate})+" 00:00:00","%Y-%m-%d %H:%i:%S") AND DATE_FORMAT(DATE(#{onlineDate})+" 23:59:59","%Y-%m-%d %H:%i:%S")
+	</select>
+	
+	<!-- 第一次打卡 -->
+	<insert id="save" parameterType="TimeRecord" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO time_record(username,online_flag,online_time)
+		VALUES(#{username},#{onlineFlag},#{onlineDate})
+	</insert>
+	
+	<!-- 第二次打卡 -->
+	<update id="update" parameterType="TimeRecord">
+		UPDATE time_record
+			<include refid="SET_CLAUSE" />
+		WHERE id=#{id}
+	</update>
+</mapper>
