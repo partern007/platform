@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace=" open.platform.domain.PlatformResource">
+<mapper namespace="open.platform.domain.PlatformResource">
     <!--select column-->
    <sql id="column_list">
        id,
@@ -25,6 +25,28 @@
        FORM paltform_resource
        WHERE id = #{id}
    </select>
+   
+   <!-- 连表获取用户资源 -->
+   <select id="selectResourceByUser" parameterType="open.paltform.query.ResourceQuery" resultType="PlatformResource">
+       SELECT
+       c.id AS id
+       c.resource AS resource,
+       c.authority AS authority,
+       c.created_time AS createdTime,
+       c.modify_time AS modifyTime   
+       FROM platform_user a,platform_user_auth b,platform_resource c
+       <trim prefix="where" prefixOverrides="and">
+           a.id = b.user_id AND b.auth_id = c.id
+           <if test="userName !=null">
+               a.user_name=#{userName}
+           </if>
+           <if test="userId !=null">
+               a.id=#{userId}
+           </if>
+       </trim>
+      limit 1
+   </select>
+   
    
    <insert id="save" parameterType="PlatformResource" useGeneratedKeys="true" keyProperty="id">
      <![CDATA[
@@ -51,7 +73,7 @@
        <include refid="WHERE_CLAUSE"/>
    </select>
    
-   <update id="update" parameterType="">
+   <update id="update" parameterType="PlatformResource">
    <![CDATA[UPDATE]]>
        paltform_resource
    <set>
@@ -60,7 +82,7 @@
        </if>
        <if test="authority != null">
            resource = #{authority}
-       </if>   
+       </if>
    </set>
   	 WHERE id = #{id}
    </update>
