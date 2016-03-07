@@ -2,7 +2,6 @@ package open.platform.service.resource.impl;
 
 import javax.annotation.Resource;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.stereotype.Service;
 
 import open.paltform.query.ResourceQuery;
@@ -22,7 +21,7 @@ public class PlatformResouceServiceImpl implements PlatformResouceService {
 				platformResource = resouceDao.selectResourceByUser(user);
 			}
 		} catch (Exception e) {
-			System.out.println("ddsfadsdf");
+			e.printStackTrace();;
 		}
 		return platformResource;
 	}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="open.platform.domain.PlatformSentEmail">
+    <!--select column-->
+   <sql id="column_list">
+       id,
+       user_id AS userId,
+       flag,
+       sent_time AS sentTime,
+       department_id AS departmentId, 
+       created_time AS createdTime
+   </sql>
+   <!-- 查询条件 -->
+   <sql id="WHERE_CLAUSE">
+       <trim prefix="WHERE" prefixOverrides="AND">
+           <if test="id != null"><![CDATA[AND id = #{id}]]></if>
+           <if test="user_id != null"><![CDATA[AND user_id= #{userId}]]></if>
+           <if test="sent_time != null"><![CDATA[AND sent_time= #{sentTime}]]></if>
+           <if test="department_id != null"><![CDATA[AND departmentId= #{departmentId}]]></if>  
+       </trim>  
+   </sql>
+   
+   <select id="selectById" parameterType="java.lang.Long" resultType="PlatformSentEmail">
+       SELECT
+       <include refid="column_list"></include>
+       FORM paltform_sent_email
+       WHERE id = #{id}
+   </select>
+   
+   <insert id="save" parameterType="PlatformSentEmail" useGeneratedKeys="true" keyProperty="id">
+     <![CDATA[
+       INSERT INTO paltform_sent_email (user_id,flag,sent_time,department_id,created_time)
+       VALUES (#{userId},#{flag},#{sentTime},#{departmentId},NOW())  
+     ]]>     
+   </insert>
+   
+   <delete id="delete" parameterType="PlatformSentEmail">
+   <![CDATA[DELETE FROM
+       	paltform_sent_email]]>
+       <include refid="WHERE_CLAUSE"/>   
+   </delete>
+   
+   <delete id="deleteById" parameterType="java.lang.Long">
+   <![CDATA[DELETE FROM
+       paltform_sent_email]]>
+       WHERE id=#{id}
+   </delete>
+   
+   <select id="search" parameterType="PlatformSentEmail" resultType="PlatformSentEmail">
+       <![CDATA[SELECT FROM]]>
+       paltform_sent_email
+       <include refid="WHERE_CLAUSE"/>
+   </select>
+   
+   <update id="update" parameterType="PlatformSentEmail">
+   <![CDATA[UPDATE]]>
+       paltform_sent_email
+   <set>
+       <if test="userId != null">
+           user_id = #{userId}
+       </if>
+       <if test="sentTime != null">
+           sent_time = #{sentTime}
+       </if>
+       <if test="department_id != null">
+           department_id = #{departmentId}
+       </if>   
+   </set>
+  	 WHERE id = #{id}
+   </update>
+   
+</mapper>

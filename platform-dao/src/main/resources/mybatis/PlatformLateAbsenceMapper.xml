@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="open.platform.domain.PlatformLateAbsence">
+    <!--select column-->
+   <sql id="column_list">
+       id,
+       user_id AS userId,
+       flag,
+       template_id AS templateId,
+       created_time AS createdTime
+   </sql>
+   <!-- 查询条件 -->
+   <sql id="WHERE_CLAUSE">
+       <trim prefix="WHERE" prefixOverrides="AND">
+           <if test="id != null"><![CDATA[AND id = #{id}]]></if>
+           <if test="user_id != null"><![CDATA[AND user_id= #{userId}]]></if>
+           <if test="template_id != null"><![CDATA[AND template_id= #{templateId}]]></if>  
+       </trim>  
+   </sql>
+   
+   <select id="selectById" parameterType="java.lang.Long" resultType="PlatformLateAbsence">
+       SELECT
+       <include refid="column_list"></include>
+       FORM paltform_late_absence
+       WHERE id = #{id}
+   </select>
+   
+   <insert id="save" parameterType="PlatformLateAbsence" useGeneratedKeys="true" keyProperty="id">
+     <![CDATA[
+       INSERT INTO paltform_late_absence (user_id,flag,template_id,created_time)
+       VALUES (#{userId},#{authId},NOW())  
+     ]]>     
+   </insert>
+   
+   <delete id="delete" parameterType="PlatformLateAbsence">
+   <![CDATA[DELETE FROM
+       	paltform_late_absence]]>
+       <include refid="WHERE_CLAUSE"/>   
+   </delete>
+   
+   <delete id="deleteById" parameterType="java.lang.Long">
+   <![CDATA[DELETE FROM
+       paltform_late_absence]]>
+       WHERE id=#{id}
+   </delete>
+   
+   <select id="search" parameterType="PlatformLateAbsence" resultType="PlatformLateAbsence">
+       <![CDATA[SELECT FROM]]>
+       paltform_late_absence
+       <include refid="WHERE_CLAUSE"/>
+   </select>
+   
+   <update id="update" parameterType="PlatformLateAbsence">
+   <![CDATA[UPDATE]]>
+       paltform_late_absence
+   <set>
+       <if test="userId != null">
+           user_id = #{userId}
+       </if>
+       <if test="templateId != null">
+           template_id = #{templateId}
+       </if>   
+   </set>
+  	 WHERE id = #{id}
+   </update>
+   
+</mapper>
